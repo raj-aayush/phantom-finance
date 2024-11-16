@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-public class Profile {
+public class Customer {
 
     @Id
     @UuidGenerator
