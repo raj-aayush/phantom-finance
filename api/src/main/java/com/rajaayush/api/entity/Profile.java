@@ -9,21 +9,17 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "profile")
 public class Profile {
 
     @Id
     @UuidGenerator
     private UUID id;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String email;
 
     @CreationTimestamp
-    @Column(name = "created_ts", nullable = false)
     private LocalDateTime createdTs;
 }
 
