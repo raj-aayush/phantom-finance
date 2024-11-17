@@ -25,7 +25,7 @@ const CustomerAccountsList = () => {
             title: 'Account ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <Link to={"/customers/"+customerId+"/accounts/"+value}>{value}</Link>
+            render: (value) => <Link to={"/accounts/"+value}>{value}</Link>
         },
         {
             title: 'Balance',
