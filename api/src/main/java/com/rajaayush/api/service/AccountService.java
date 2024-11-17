@@ -13,26 +13,24 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CustomerService {
+public class AccountService {
+    @Autowired
+    private AccountRepository accountRepository;
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
     }
 
-    public Customer create(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-    public List<Account> getAllAccountsForCustomer(UUID customerId) throws BadRequestException {
+    public Account create(UUID customerId, double initialAmount) throws BadRequestException {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if(customer.isEmpty()) {
             throw new BadRequestException();
         }
-        return accountRepository.findAllByOwner(customer.get());
+        Account ac = new Account();
+        ac.owner = customer.get();
+        ac.balance = initialAmount;
+        return accountRepository.save(ac);
     }
 }
