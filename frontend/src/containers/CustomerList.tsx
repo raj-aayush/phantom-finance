@@ -15,10 +15,10 @@ const CustomerList = () => {
     }, []);
     const columns: TableProps<Customer>['columns'] = [
         {
-            title: 'ID',
+            title: 'Customer ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <Link to={"/"+value+"/accounts"}>{value}</Link>
+            render: (value) => <Link to={"/customers/"+value}>{value}</Link>
         },
         {
             title: 'Name',
