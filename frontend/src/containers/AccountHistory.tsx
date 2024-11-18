@@ -53,7 +53,7 @@ const AccountHistory = () => {
         <SideMenuWrapper>
             <Layout.Content>
                 <Card>
-                    <Table<Account> columns={columns} dataSource={transactions} />
+                    <Table<Account> rowKey="id" columns={columns} dataSource={transactions} />
                 </Card>
             </Layout.Content>
         </SideMenuWrapper>

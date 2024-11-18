@@ -24,7 +24,7 @@ const SideMenuWrapper: ({children}: { children: React.ReactNode }) => JSX.Elemen
                         {label: "New customer", key: 'addCustomer', icon: <UserAddOutlined />, onClick: () => navigate("/customers/new")}
                     ]},
                     {label: "Accounts", key: 'accounts', icon: <FileTextOutlined />, onClick: () => navigate("/accounts")},
-                    {label: "New Transaction", key: 'accounts', icon: <DollarOutlined />, onClick: () => navigate("/transactions/new")},
+                    {label: "New Transaction", key: 'accountsList', icon: <DollarOutlined />, onClick: () => navigate("/transactions/new")},
                 ]} />
             </Layout.Sider>
             <Layout style={{width: "100%"}}>

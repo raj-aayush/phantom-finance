@@ -40,7 +40,7 @@ const CustomerList = () => {
         <SideMenuWrapper>
             <Layout.Content>
                 <Card>
-                    <Table<Customer> columns={columns} dataSource={customers} />
+                    <Table<Customer> rowKey="id" columns={columns} dataSource={customers} />
                 </Card>
             </Layout.Content>
         </SideMenuWrapper>

@@ -3,20 +3,13 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Account, Customer} from "../types";
-import {Link, useParams} from "react-router-dom";
-import AccountCreate from "./AccountCreate.tsx";
+import {Link} from "react-router-dom";
 
-const CustomerAccountsList = () => {
-    const [customer, setCustomer] = useState<Customer>();
+const AccountsList = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
-    const { customerId } = useParams();
     useEffect(() => {
         // TODO: Use Redux to store state data
-        axios.get('/api/customers/'+customerId+"/").then((result) => {
-            setCustomer(result.data);
-            console.log(result);
-        });
-        axios.get('/api/customers/'+customerId+'/accounts/').then(result => {
+        axios.get('/api/accounts/').then(result => {
             setAccounts(result.data);
             console.log(result);
         })
@@ -27,6 +20,12 @@ const CustomerAccountsList = () => {
             dataIndex: 'id',
             key: 'id',
             render: (value) => <Link to={"/accounts/"+value}>{value}</Link>
+        },
+        {
+            title: 'Owner',
+            dataIndex: 'owner',
+            key: 'owner.id',
+            render: (value) => value.firstName
         },
         {
             title: 'Balance',
@@ -47,8 +46,6 @@ const CustomerAccountsList = () => {
     return (
         <SideMenuWrapper>
             <Layout.Content>
-                <AccountCreate onCreate={account => setAccounts([...accounts, account])} />
-                <br />
                 <Card>
                     <Table<Account> rowKey="id" columns={columns} dataSource={accounts} />
                 </Card>
@@ -57,4 +54,4 @@ const CustomerAccountsList = () => {
     );
 }
 
-export default CustomerAccountsList;
+export default AccountsList;
