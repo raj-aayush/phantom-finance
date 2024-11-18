@@ -4,6 +4,7 @@ import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Account, Customer} from "../types";
 import {Link, useParams} from "react-router-dom";
+import AccountCreate from "./AccountCreate.tsx";
 
 const CustomerAccountsList = () => {
     const [customer, setCustomer] = useState<Customer>();
@@ -46,6 +47,8 @@ const CustomerAccountsList = () => {
     return (
         <SideMenuWrapper>
             <Layout.Content>
+                <AccountCreate onCreate={account => setAccounts([...accounts, account])} />
+                <br />
                 <Card>
                     <Table<Account> columns={columns} dataSource={accounts} />
                 </Card>
