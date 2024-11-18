@@ -1,11 +1,10 @@
 import {Button, Card, Form, Input, Layout} from "antd";
-import {useForm} from "antd/es/form/Form";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 const CustomerCreate = () => {
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const navigate = useNavigate();
     return (
         <SideMenuWrapper>
