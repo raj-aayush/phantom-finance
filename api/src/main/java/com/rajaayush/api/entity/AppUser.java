@@ -6,13 +6,19 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
-public class AppUser {
+public class AppUser implements UserDetails {
 
     @Id
     @UuidGenerator
@@ -29,4 +35,11 @@ public class AppUser {
 
     @UpdateTimestamp
     private LocalDateTime updatedTs;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.stream(roles.split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
 }
