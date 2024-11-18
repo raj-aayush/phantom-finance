@@ -1,11 +1,10 @@
 import {Button, Card, Form, Input, Layout, Select} from "antd";
-import {useForm} from "antd/es/form/Form";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 
 const TransactionCreate = ({onCreate}) => {
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const {accountId} = useParams();
     return (
         <SideMenuWrapper>

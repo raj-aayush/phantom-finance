@@ -1,4 +1,4 @@
-import {Layout, Menu} from "antd";
+import {Button, Layout, Menu} from "antd";
 import {ReactNode, useState} from "react";
 import {
     DollarOutlined,
@@ -9,6 +9,7 @@ import {
     UserAddOutlined
 } from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 
 const SideMenuWrapper: ({children}: { children: React.ReactNode }) => JSX.Element = ({children} : {children: ReactNode}) => {
@@ -26,6 +27,13 @@ const SideMenuWrapper: ({children}: { children: React.ReactNode }) => JSX.Elemen
                     {label: "Accounts", key: 'accounts', icon: <FileTextOutlined />, onClick: () => navigate("/accounts")},
                     {label: "New Transaction", key: 'accountsList', icon: <DollarOutlined />, onClick: () => navigate("/transactions/new")},
                 ]} />
+                <Button type="primary" onClick={() => {
+                    localStorage.removeItem('token');
+                    delete axios.defaults.headers.common['Authorization'];
+                    navigate("/login");
+                }}>
+                    Log out
+                </Button>
             </Layout.Sider>
             <Layout style={{width: "100%"}}>
                 {children}

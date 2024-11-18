@@ -1,10 +1,9 @@
 import {Button, Card, Form, Input} from "antd";
-import {useForm} from "antd/es/form/Form";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
 const AccountCreate = ({onCreate}) => {
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const {customerId} = useParams();
     return (
         <Card>
