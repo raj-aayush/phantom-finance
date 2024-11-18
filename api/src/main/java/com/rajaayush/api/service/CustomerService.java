@@ -1,5 +1,6 @@
 package com.rajaayush.api.service;
 
+import com.rajaayush.api.dto.CreateCustomerRequest;
 import com.rajaayush.api.entity.Account;
 import com.rajaayush.api.entity.Customer;
 import com.rajaayush.api.repository.AccountRepository;
@@ -20,12 +21,28 @@ public class CustomerService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AccountService accountService;
+
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Customer create(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer create(CreateCustomerRequest request) throws BadRequestException {
+        Customer customer = new Customer();
+        customer.setFirstName(request.getFirstName());
+        customer.setEmail(request.getFirstName());
+        customer = customerRepository.save(customer);
+        accountService.create(customer.getId(), request.getInitialAmount());
+        return customer;
+    }
+
+    public Customer getCustomer(UUID customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if(customer.isEmpty()) {
+            throw new Error("Not Found");
+        }
+        return customer.get();
     }
 
     public List<Account> getAllAccountsForCustomer(UUID customerId) throws BadRequestException {
