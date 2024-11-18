@@ -1,6 +1,7 @@
 import {Layout, Menu} from "antd";
 import {ReactNode, useState} from "react";
 import {
+    DollarOutlined,
     FileAddOutlined,
     FileTextOutlined,
     TeamOutlined,
@@ -22,11 +23,8 @@ const SideMenuWrapper: ({children}: { children: React.ReactNode }) => JSX.Elemen
                         {label: "All customers", key: "customerList", icon: <UnorderedListOutlined />, onClick: () => navigate("/customers")},
                         {label: "New customer", key: 'addCustomer', icon: <UserAddOutlined />, onClick: () => navigate("/customers/new")}
                     ]},
-                    {label: "Accounts", key: 'accounts', icon: <FileTextOutlined />, children: [
-                        {label: "All accounts", key: "accountList", icon: <UnorderedListOutlined />, onClick: () => navigate("/accounts")},
-                        {label: "New account", key: 'addAccount', icon: <FileAddOutlined />, onClick: () => navigate("/accounts/new")}
-                    ]},
-
+                    {label: "Accounts", key: 'accounts', icon: <FileTextOutlined />, onClick: () => navigate("/accounts")},
+                    {label: "New Transaction", key: 'accounts', icon: <DollarOutlined />, onClick: () => navigate("/transactions/new")},
                 ]} />
             </Layout.Sider>
             <Layout style={{width: "100%"}}>
