@@ -13,7 +13,7 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Disable CSRF for simplicity; enable it in production with proper config
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/customer/").permitAll() // Open access to this endpoint
+                        .requestMatchers("/api/**").permitAll() // Open access to this endpoint
                         .anyRequest().authenticated() // Secure all other endpoints
                 )
                 .httpBasic(); // Use basic authentication for now (or configure JWT as needed)

@@ -23,11 +23,6 @@ public class AccountController {
         return accountService.getAllAccounts();
     }
 
-    @PostMapping("/")
-    public Account create(@Valid @RequestBody CreateAccountRequest request) throws BadRequestException {
-        return accountService.create(request.getCustomerId(), request.getBalance());
-    }
-
     @GetMapping("/{accountId}/")
     public double getBalance(@PathVariable UUID accountId) throws BadRequestException {
         return accountService.getBalance(accountId);

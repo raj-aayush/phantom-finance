@@ -8,8 +8,8 @@ import java.util.UUID;
 @Data
 public class CreateAccountRequest {
 
-    @NotBlank(message = "Customer ID is required")
+//    @NotBlank(message = "Customer ID is required")
     private UUID customerId;
 
-    private double balance = 0.0;
+    private double initialAmount = 0.0;
 }
