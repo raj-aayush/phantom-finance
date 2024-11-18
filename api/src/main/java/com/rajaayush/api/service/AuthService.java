@@ -61,4 +61,11 @@ public class AuthService {
 
         return token;
     }
+
+    public void logout(String token) throws BadRequestException {
+        if(token == null) {
+            throw new BadRequestException("No token provided");
+        }
+        authTokenRepository.deleteByToken(token);
+    }
 }

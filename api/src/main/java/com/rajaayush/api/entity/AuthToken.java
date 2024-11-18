@@ -1,8 +1,10 @@
 package com.rajaayush.api.entity;
 
 import jakarta.persistence.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 
@@ -25,4 +27,13 @@ public class AuthToken {
 
     @CreationTimestamp
     private LocalDateTime createdTs;
+
+    public static String extract(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
 }
