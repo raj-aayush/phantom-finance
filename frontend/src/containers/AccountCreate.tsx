@@ -9,18 +9,13 @@ const AccountCreate = ({onCreate}) => {
     return (
         <Card>
             <h2>New account</h2>
-            <Form layout="inline" form={form} validateTrigger="onBlur" onFinish={(values) => {
+            <Form layout="inline" form={form} onFinish={(values) => {
                 axios.post('/api/customers/'+customerId+'/accounts/', values).then(response => {
                     console.log(response);
                     onCreate(response.data);
                 });
             }}>
-                <Form.Item name="initialAmount" initialValue="0" label="Initial amount" rules={[{required: true, validator: (_rule, value) => {
-                        if(value < 0) {
-                            return Promise.reject("Initial amount cannot be a negative number");
-                        }
-                        return Promise.resolve();
-                }}]}>
+                <Form.Item name="initialAmount" label="Initial amount" normalize={value => parseInt(value, 10)} rules={[{required: true, type: "number", min: 0}]}>
                     <Input type="number"/>
                 </Form.Item>
                 <Form.Item type="submit">

@@ -12,7 +12,7 @@ const CustomerCreate = () => {
             <Layout.Content>
                 <Card>
                     <h2>New customer details</h2>
-                    <Form form={form} labelCol={{span: 6}} validateTrigger="onBlur" onFinish={(values) => {
+                    <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
                         axios.post('/api/customers/', values).then(response => {
                             navigate("/customers");
                         });
@@ -20,15 +20,10 @@ const CustomerCreate = () => {
                         <Form.Item name="firstName" label="First name" rules={[{required: true}]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name="email" label="Email" rules={[{type: "email"}]}>
+                        <Form.Item name="email" label="Email" validateTrigger="onBlur" rules={[{type: "email"}]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name="initialAmount" initialValue="0" label="Initial amount" rules={[{required: true, validator: (_rule, value) => {
-                            if(value < 0) {
-                                return Promise.reject("Initial amount cannot be a negative number");
-                            }
-                            return Promise.resolve();
-                        }}]}>
+                        <Form.Item name="initialAmount" label="Initial amount" normalize={value => parseInt(value, 10)} rules={[{required: true, type: "number", min: 0}]}>
                             <Input type="number"/>
                         </Form.Item>
                         <Form.Item type="submit">
