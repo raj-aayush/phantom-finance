@@ -2,7 +2,6 @@ import {Button, Layout, Menu} from "antd";
 import {ReactNode, useState} from "react";
 import {
     DollarOutlined,
-    FileAddOutlined,
     FileTextOutlined,
     TeamOutlined,
     UnorderedListOutlined,

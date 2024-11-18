@@ -1,21 +1,16 @@
 import {Button, Card, Form, Input, Layout, Select} from "antd";
 import axios from "axios";
-import {useParams} from "react-router-dom";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 
-const TransactionCreate = ({onCreate}) => {
+const TransactionCreate = () => {
     const [form] = Form.useForm();
-    const {accountId} = useParams();
     return (
         <SideMenuWrapper>
             <Layout.Content>
                 <Card>
                     <h2>New Transaction</h2>
                     <Form form={form} labelCol={{span: 6}} validateTrigger="onBlur" onFinish={(values) => {
-                        axios.post('/api/transactions/', values).then(response => {
-                            console.log(response);
-                            onCreate(response.data);
-                        });
+                        axios.post('/api/transactions/', values)
                     }}>
                         <Form.Item name="sender" label="Sender" rules={[{required: true}]}>
                             <Select></Select>
@@ -26,7 +21,7 @@ const TransactionCreate = ({onCreate}) => {
                         <Form.Item name="amount" label="Amount" normalize={value => parseInt(value, 10)} rules={[{required: true, type: "number", min: 5}]}>
                             <Input type="number"/>
                         </Form.Item>
-                        <Form.Item type="submit">
+                        <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>
