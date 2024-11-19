@@ -2,7 +2,7 @@ import {Card, Layout, Table, TableProps} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
-import {Account, Customer} from "../types";
+import {Account} from "../types";
 import {Link} from "react-router-dom";
 
 const AccountsList = () => {
@@ -14,7 +14,7 @@ const AccountsList = () => {
             console.log(result);
         })
     }, []);
-    const columns: TableProps<Customer>['columns'] = [
+    const columns: TableProps<Account>['columns'] = [
         {
             title: 'Account ID',
             dataIndex: 'id',

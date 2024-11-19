@@ -1,4 +1,4 @@
-import {Button, Card, Form, Input} from "antd";
+import {Button, Card, Form, Input, message} from "antd";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
@@ -30,8 +30,20 @@ const Login = () => {
                         <Input.Password />
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
+                        <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                            Sign in
+                        </Button>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button style={{width: '100%'}} onClick={() => {
+                            form.validateFields().then((values) => {
+                                axios.post('/api/register/', values).then(_r => {
+                                    form.resetFields();
+                                    message.success("Registration successful!");
+                                }).catch(err => console.log(err));
+                            });
+                        }}>
+                            Register
                         </Button>
                     </Form.Item>
                 </Form>

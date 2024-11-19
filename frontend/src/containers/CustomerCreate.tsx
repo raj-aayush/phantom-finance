@@ -12,7 +12,7 @@ const CustomerCreate = () => {
                 <Card>
                     <h2>New customer details</h2>
                     <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
-                        axios.post('/api/customers/', values).then(response => {
+                        axios.post('/api/customers/', values).then(_response => {
                             navigate("/customers");
                         });
                     }}>
@@ -25,7 +25,7 @@ const CustomerCreate = () => {
                         <Form.Item name="initialAmount" label="Initial amount" normalize={value => parseInt(value, 10)} rules={[{required: true, type: "number", min: 0}]}>
                             <Input type="number"/>
                         </Form.Item>
-                        <Form.Item type="submit">
+                        <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>

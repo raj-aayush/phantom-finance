@@ -33,7 +33,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Disable CSRF for simplicity; enable it in production with proper config
+                .csrf(csrf -> csrf.disable()) // Temporarily disable CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/login/", "/api/register/").permitAll()
                         .anyRequest().authenticated() // Secure all other endpoints
