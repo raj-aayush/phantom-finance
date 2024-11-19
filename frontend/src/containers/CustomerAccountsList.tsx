@@ -8,6 +8,7 @@ import AccountCreate from "./AccountCreate.tsx";
 import UuidRenderer from "../components/UuidRenderer.tsx";
 import dayjs from 'dayjs';
 import RelativeDate from "../components/RelativeDate.tsx";
+import {TransactionCreateCard} from "./TransactionCreate.tsx";
 
 const CustomerAccountsList = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
@@ -64,6 +65,13 @@ const CustomerAccountsList = () => {
             <Layout.Content>
                 <AccountCreate onCreate={(account: Account) => setAccounts([...accounts, account])}/>
                 <br/>
+                <TransactionCreateCard onComplete={() => {
+                    axios.get('/api/customers/'+customerId+'/accounts/').then(result => {
+                        setAccounts(result.data);
+                        console.log(result);
+                    })
+                }}/>
+                <br />
                 <Card>
                     <Table<Account> rowKey="id" columns={columns} dataSource={accounts}/>
                 </Card>
