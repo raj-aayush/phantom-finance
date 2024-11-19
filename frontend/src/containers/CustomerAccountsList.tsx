@@ -3,8 +3,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Account} from "../types";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import AccountCreate from "./AccountCreate.tsx";
+import UuidRenderer from "../components/UuidRenderer.tsx";
 
 const CustomerAccountsList = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
@@ -20,7 +21,7 @@ const CustomerAccountsList = () => {
             title: 'Account ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <Link to={"/accounts/"+value}>{value}</Link>
+            render: (value) => <UuidRenderer uuid={value} href={"/accounts/"} />
         },
         {
             title: 'Balance',

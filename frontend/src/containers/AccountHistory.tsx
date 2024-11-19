@@ -3,7 +3,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Transaction} from "../types";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import UuidRenderer from "../components/UuidRenderer.tsx";
 
 const AccountHistory = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -19,7 +20,7 @@ const AccountHistory = () => {
             title: 'Transaction ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <Link to={"/customers/"+customerId+"/accounts/"+value}>{value}</Link>
+            render: (value) => <UuidRenderer uuid={value} href={"/customers/"} />
         },
         {
             title: 'Sender',
