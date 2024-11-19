@@ -1,8 +1,20 @@
-FROM eclipse-temurin:21
+FROM eclipse-temurin:21-jdk AS api-builder
 
-WORKDIR /build
+WORKDIR /app
+COPY gradlew build.gradle settings.gradle ./
+COPY gradle ./gradle
 
-COPY build/libs/api-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY src ./src
+
+RUN chmod +x gradlew
+
+RUN ./gradlew build --no-daemon
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+COPY --from=api-builder /app/build/libs/api-*-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
