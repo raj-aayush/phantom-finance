@@ -35,7 +35,7 @@ const Login = () => {
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="secondary" style={{width: '100%'}} onClick={() => {
+                        <Button style={{width: '100%'}} onClick={() => {
                             form.validateFields().then((values) => {
                                 axios.post('/api/register/', values).then(_r => {
                                     form.resetFields();
