@@ -2,7 +2,7 @@ import {Button, Layout, Menu} from "antd";
 import {ReactNode, useState} from "react";
 import {
     DollarOutlined,
-    FileTextOutlined,
+    LogoutOutlined,
     TeamOutlined,
     UnorderedListOutlined,
     UserAddOutlined
@@ -23,15 +23,14 @@ const SideMenuWrapper: ({children}: { children: React.ReactNode }) => JSX.Elemen
                         {label: "All customers", key: "customerList", icon: <UnorderedListOutlined />, onClick: () => navigate("/customers")},
                         {label: "New customer", key: 'addCustomer', icon: <UserAddOutlined />, onClick: () => navigate("/customers/new")}
                     ]},
-                    {label: "Accounts", key: 'accounts', icon: <FileTextOutlined />, onClick: () => navigate("/accounts")},
                     {label: "New Transaction", key: 'accountsList', icon: <DollarOutlined />, onClick: () => navigate("/transactions/new")},
                 ]} />
-                <Button type="primary" onClick={() => {
+                <Button type="primary" style={{width: '100%'}} onClick={() => {
                     localStorage.removeItem('token');
                     delete axios.defaults.headers.common['Authorization'];
                     navigate("/login");
                 }}>
-                    Log out
+                    <LogoutOutlined /> Log out
                 </Button>
             </Layout.Sider>
             <Layout style={{width: "100%"}}>

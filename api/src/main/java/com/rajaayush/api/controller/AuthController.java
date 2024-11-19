@@ -4,12 +4,11 @@ import com.rajaayush.api.dto.AuthRequest;
 import com.rajaayush.api.entity.AuthToken;
 import com.rajaayush.api.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -19,17 +18,40 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register/")
-    public void register(@RequestBody AuthRequest request) throws BadRequestException {
-        authService.register(request.getUsername(), request.getPassword());
+    public ResponseEntity<?> register(@RequestBody AuthRequest request) {
+        try {
+            authService.register(request.getUsername(), request.getPassword());
+            return ResponseEntity.ok("Registration successful.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred during registration.");
+        }
     }
 
     @PostMapping("/login/")
-    public String login(@RequestBody AuthRequest request) throws BadRequestException {
-        return authService.login(request.getUsername(), request.getPassword());
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        try {
+            String token = authService.login(request.getUsername(), request.getPassword());
+            return ResponseEntity.ok(token);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Login failed: " + e.getMessage());
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred during login.");
+        }
     }
 
     @PostMapping("/logout/")
-    public void logout(HttpServletRequest request) throws BadRequestException {
-        authService.logout(AuthToken.extract(request));
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        try {
+            authService.logout(AuthToken.extract(request));
+            return ResponseEntity.ok("Logout successful.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Logout failed: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred during logout.");
+        }
     }
 }
