@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Customer} from "../types";
-import {Link} from "react-router-dom";
+import UuidRenderer from "../components/UuidRenderer.tsx";
 
 const CustomerList = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -18,7 +18,7 @@ const CustomerList = () => {
             title: 'Customer ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <Link to={"/customers/"+value}>{value}</Link>
+            render: (value) => <UuidRenderer uuid={value} href={"/customers/"} />
         },
         {
             title: 'Name',

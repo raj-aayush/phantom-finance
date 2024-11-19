@@ -26,11 +26,13 @@ const AccountHistory = () => {
             title: 'Sender',
             dataIndex: 'sender',
             key: 'sender',
+            render: (value) => <UuidRenderer uuid={value.id} href={"/accounts/"} />
         },
         {
             title: 'Receiver',
             dataIndex: 'receiver',
             key: 'receiver',
+            render: (value) => <UuidRenderer uuid={value.id} href={"/accounts/"} />
         },
         {
             title: 'Amount',
