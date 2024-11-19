@@ -6,6 +6,7 @@ import com.rajaayush.api.repository.AccountRepository;
 import com.rajaayush.api.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class TransactionService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Transactional
     public Transaction transfer(String senderId, String receiverId, double amount) throws IllegalArgumentException {
         Optional<Account> senderQuery = accountRepository.findById(UUID.fromString(senderId));
         Optional<Account> receiverQuery = accountRepository.findById(UUID.fromString(receiverId));
@@ -37,10 +39,12 @@ public class TransactionService {
 
         Transaction txn = new Transaction();
         sender.setBalance(sender.getBalance()-amount);
-        txn.setSender(sender);
         accountRepository.save(sender);
 
         receiver.setBalance(receiver.getBalance() + amount);
+        accountRepository.save(receiver);
+
+        txn.setSender(sender);
         txn.setReceiver(receiver);
         txn.setAmount(amount);
         return transactionRepository.save(txn);

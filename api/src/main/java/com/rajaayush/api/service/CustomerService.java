@@ -28,10 +28,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer create(CreateCustomerRequest request) throws BadRequestException {
+    public Customer create(CreateCustomerRequest request) throws IllegalArgumentException {
         Customer customer = new Customer();
         customer.setFirstName(request.getFirstName());
-        customer.setEmail(request.getFirstName());
+        customer.setEmail(request.getEmail());
         customer = customerRepository.save(customer);
         accountService.create(customer.getId(), request.getInitialAmount());
         return customer;
@@ -45,10 +45,10 @@ public class CustomerService {
         return customer.get();
     }
 
-    public List<Account> getAllAccountsForCustomer(UUID customerId) throws BadRequestException {
+    public List<Account> getAllAccountsForCustomer(UUID customerId) throws IllegalArgumentException {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if(customer.isEmpty()) {
-            throw new BadRequestException();
+            throw new IllegalArgumentException();
         }
         return accountRepository.findAllByOwner(customer.get());
     }

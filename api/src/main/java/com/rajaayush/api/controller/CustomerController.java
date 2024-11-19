@@ -6,11 +6,9 @@ import com.rajaayush.api.entity.Account;
 import com.rajaayush.api.entity.Customer;
 import com.rajaayush.api.service.AccountService;
 import com.rajaayush.api.service.CustomerService;
-import jakarta.validation.Valid;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -25,27 +23,60 @@ public class CustomerController {
     private AccountService accountService;
 
     @GetMapping("/")
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    public ResponseEntity<?> getAllCustomers() {
+        try {
+            List<Customer> customers = customerService.getAllCustomers();
+            return ResponseEntity.ok(customers);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching customers.");
+        }
     }
 
     @PostMapping("/")
-    public Customer createCustomer(@RequestBody CreateCustomerRequest request) throws BadRequestException {
-        return customerService.create(request);
+    public ResponseEntity<?> createCustomer(@RequestBody CreateCustomerRequest request) {
+        try {
+            Customer customer = customerService.create(request);
+            return ResponseEntity.ok(customer);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid customer data: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while creating the customer.");
+        }
     }
 
     @GetMapping("/{customerId}/")
-    public Customer getAllCustomers(@PathVariable UUID customerId) {
-        return customerService.getCustomer(customerId);
+    public ResponseEntity<?> getCustomer(@PathVariable UUID customerId) {
+        try {
+            Customer customer = customerService.getCustomer(customerId);
+            return ResponseEntity.ok(customer);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid customer ID: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching the customer.");
+        }
     }
 
     @GetMapping("/{customerId}/accounts/")
-    public List<Account> getAllAccountsForCustomer(@PathVariable UUID customerId) throws BadRequestException {
-        return customerService.getAllAccountsForCustomer(customerId);
+    public ResponseEntity<?> getAllAccountsForCustomer(@PathVariable UUID customerId) {
+        try {
+            List<Account> accounts = customerService.getAllAccountsForCustomer(customerId);
+            return ResponseEntity.ok(accounts);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid customer ID: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching accounts.");
+        }
     }
 
     @PostMapping("/{customerId}/accounts/")
-    public Account createAccount(@PathVariable UUID customerId, @RequestBody CreateAccountRequest request) throws BadRequestException {
-        return accountService.create(customerId, request.getInitialAmount());
+    public ResponseEntity<?> createAccount(@PathVariable UUID customerId, @RequestBody CreateAccountRequest request) {
+        try {
+            Account account = accountService.create(customerId, request.getInitialAmount());
+            return ResponseEntity.ok(account);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid account data: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while creating the account.");
+        }
     }
 }

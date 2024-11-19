@@ -7,6 +7,7 @@ import {Link, useParams} from "react-router-dom";
 import AccountCreate from "./AccountCreate.tsx";
 import UuidRenderer from "../components/UuidRenderer.tsx";
 import dayjs from 'dayjs';
+import RelativeDate from "../components/RelativeDate.tsx";
 
 const CustomerAccountsList = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
@@ -34,12 +35,14 @@ const CustomerAccountsList = () => {
             title: 'Creation date',
             dataIndex: 'createdTs',
             key: 'createdTs',
+            render: (value) => <RelativeDate date={value} />,
             sorter: (a, b) => dayjs(a.createdTs).valueOf() - dayjs(b.createdTs).valueOf(),
         },
         {
             title: 'Updated date',
             dataIndex: 'updatedTs',
             key: 'updatedTs',
+            render: (value) => <RelativeDate date={value} />,
             sorter: (a, b) => dayjs(a.updatedTs).valueOf() - dayjs(b.updatedTs).valueOf(),
         }
     ];

@@ -10,6 +10,11 @@ import TransactionCreate from "./containers/TransactionCreate.tsx";
 import Login from "./containers/Login.tsx";
 import axios from "axios";
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+
 const ProtectedRoute = () => {
     let authToken = localStorage.getItem('token');
     if(!!authToken && !axios.defaults.headers.common['Authorization']) {

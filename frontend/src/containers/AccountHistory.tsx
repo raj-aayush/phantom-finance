@@ -6,6 +6,7 @@ import {Transaction} from "../types";
 import {Link, useParams} from "react-router-dom";
 import UuidRenderer from "../components/UuidRenderer.tsx";
 import dayjs from "dayjs";
+import RelativeDate from "../components/RelativeDate.tsx";
 
 const AccountHistory = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -45,6 +46,7 @@ const AccountHistory = () => {
             title: 'Transaction date',
             dataIndex: 'createdTs',
             key: 'createdTs',
+            render: (value) => <RelativeDate date={value} />,
             sorter: (a, b) => dayjs(a.createdTs).valueOf() - dayjs(b.createdTs).valueOf(),
         }
     ];

@@ -1,14 +1,11 @@
 package com.rajaayush.api.controller;
 
-import com.rajaayush.api.dto.CreateAccountRequest;
 import com.rajaayush.api.entity.Account;
 import com.rajaayush.api.entity.Transaction;
 import com.rajaayush.api.service.AccountService;
-import jakarta.validation.Valid;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -19,17 +16,36 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping("/")
-    public List<Account> getAllAccounts() {
-        return accountService.getAllAccounts();
+    public ResponseEntity<?> getAllAccounts() {
+        try {
+            List<Account> accounts = accountService.getAllAccounts();
+            return ResponseEntity.ok(accounts);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching accounts.");
+        }
     }
 
     @GetMapping("/{accountId}/")
-    public double getBalance(@PathVariable UUID accountId) throws BadRequestException {
-        return accountService.getBalance(accountId);
+    public ResponseEntity<?> getBalance(@PathVariable UUID accountId) {
+        try {
+            double balance = accountService.getBalance(accountId);
+            return ResponseEntity.ok(balance);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid account ID: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching the account balance.");
+        }
     }
 
     @GetMapping("/{accountId}/history/")
-    public List<Transaction> getTransactionHistory(@PathVariable UUID accountId) throws BadRequestException {
-        return accountService.getTransactionHistory(accountId);
+    public ResponseEntity<?> getTransactionHistory(@PathVariable UUID accountId) {
+        try {
+            List<Transaction> transactions = accountService.getTransactionHistory(accountId);
+            return ResponseEntity.ok(transactions);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid account ID: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred while fetching transaction history.");
+        }
     }
 }
