@@ -1,10 +1,10 @@
-import {Button, Card, Form, Input, Layout} from "antd";
+import {Button, Card, Form, FormInstance, Input, Layout, message} from "antd";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 
-const transactionAccountValidator = (form) => {
-    let sender = form.getFieldValue('sender');
-    let receiver = form.getFieldValue('receiver');
+const transactionAccountValidator = (form: FormInstance) => {
+    let sender = form.getFieldValue('sender' as any);
+    let receiver = form.getFieldValue('receiver' as any);
     if(sender && receiver && sender.toLowerCase() == receiver.toLowerCase()) {
         return Promise.reject("Sender cannot be the same as receiver");
     }
@@ -19,7 +19,12 @@ const TransactionCreate = () => {
                 <Card>
                     <h2>New Transaction</h2>
                     <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
-                        axios.post('/api/transactions/', values)
+                        axios.post('/api/transactions/', values).then(() => {
+                            message.success("Completed transaction!");
+                            form.resetFields();
+                        }).catch((err) => {
+                            message.error(err.response.data);
+                        });
                     }}>
                         <Form.Item name="sender" label="Sender" rules={[{required: true, validator: () => transactionAccountValidator(form)}]}>
                             <Input />
