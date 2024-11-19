@@ -1,10 +1,11 @@
-import {Card, Layout, Table, TableProps} from "antd";
+import {Breadcrumb, Card, Layout, Table, TableProps} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Customer} from "../types";
 import UuidRenderer from "../components/UuidRenderer.tsx";
 import dayjs from "dayjs";
+import {Link} from "react-router-dom";
 
 const CustomerList = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -42,6 +43,13 @@ const CustomerList = () => {
     ];
     return (
         <SideMenuWrapper>
+            <br />
+            <Card>
+                <Breadcrumb>
+                    <Breadcrumb.Item><Link to={"/customers"}>Customers</Link></Breadcrumb.Item>
+                </Breadcrumb>
+            </Card>
+            <br />
             <Layout.Content>
                 <Card>
                     <Table<Customer> rowKey="id" columns={columns} dataSource={customers} />
