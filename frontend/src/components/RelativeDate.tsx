@@ -4,7 +4,7 @@ import {InfoCircleOutlined} from "@ant-design/icons";
 
 
 const RelativeDate = ({date}: {date: string}) => {
-    let dayJsDate = dayjs(date);
+    let dayJsDate = dayjs.utc(date);
     return (
         <Popover content={dayJsDate.toString()}>
             {dayJsDate.fromNow()}
