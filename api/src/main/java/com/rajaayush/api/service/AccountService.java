@@ -27,10 +27,10 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account create(UUID customerId, double initialAmount) throws BadRequestException {
+    public Account create(UUID customerId, double initialAmount) throws IllegalArgumentException {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if(customer.isEmpty()) {
-            throw new BadRequestException();
+            throw new IllegalArgumentException();
         }
         Account ac = new Account();
         ac.owner = customer.get();
@@ -38,18 +38,18 @@ public class AccountService {
         return accountRepository.save(ac);
     }
 
-    public double getBalance(UUID accountId) throws BadRequestException {
+    public double getBalance(UUID accountId) throws IllegalArgumentException {
         Optional<Account> account = accountRepository.findById(accountId);
         if(account.isEmpty()) {
-            throw new BadRequestException();
+            throw new IllegalArgumentException();
         }
         return account.get().getBalance();
     }
 
-    public List<Transaction> getTransactionHistory(UUID accountId) throws BadRequestException {
+    public List<Transaction> getTransactionHistory(UUID accountId) throws IllegalArgumentException {
         Optional<Account> account = accountRepository.findById(accountId);
         if(account.isEmpty()) {
-            throw new BadRequestException();
+            throw new IllegalArgumentException();
         }
         List<Transaction> txns = transactionRepository.findAllBySender(account.get());
         txns.addAll(transactionRepository.findAllByReceiver(account.get()));
