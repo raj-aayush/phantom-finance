@@ -21,19 +21,19 @@ const AccountHistory = () => {
             title: 'Transaction ID',
             dataIndex: 'id',
             key: 'id',
-            render: (value) => <UuidRenderer uuid={value} href={"/customers/"} />
+            render: (value) => <UuidRenderer uuid={value} />
         },
         {
             title: 'Sender',
             dataIndex: 'sender',
             key: 'sender',
-            render: (value) => <UuidRenderer uuid={value.id} href={"/customers/"+customerId+"/accounts/"} />
+            render: (value) => <UuidRenderer uuid={value.id} />
         },
         {
             title: 'Receiver',
             dataIndex: 'receiver',
             key: 'receiver',
-            render: (value) => <UuidRenderer uuid={value.id} href={"/customers/"+customerId+"/accounts/"} />
+            render: (value) => <UuidRenderer uuid={value.id} />
         },
         {
             title: 'Amount',
