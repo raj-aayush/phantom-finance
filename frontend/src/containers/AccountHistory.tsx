@@ -8,7 +8,7 @@ import UuidRenderer from "../components/UuidRenderer.tsx";
 
 const AccountHistory = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const { customerId, accountId } = useParams();
+    const { accountId } = useParams();
     useEffect(() => {
         axios.get('/api/accounts/'+accountId+'/history/').then(result => {
             setTransactions(result.data);
