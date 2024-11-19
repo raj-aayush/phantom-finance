@@ -19,7 +19,7 @@ export const TransactionCreateCard = ({onComplete}: {onComplete?: Function}) => 
             <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
                 axios.post('/api/transactions/', values).then(() => {
                     message.success("Completed transaction!");
-                    onComplete();
+                    onComplete?.();
                     form.resetFields();
                 }).catch((err) => {
                     message.error(err.response.data);
@@ -45,7 +45,6 @@ export const TransactionCreateCard = ({onComplete}: {onComplete?: Function}) => 
 }
 
 const TransactionCreate = () => {
-    const [form] = Form.useForm();
     return (
         <SideMenuWrapper>
             <Layout.Content style={{width: "600px"}}>
