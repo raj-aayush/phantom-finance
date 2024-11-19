@@ -16,12 +16,15 @@ const Login = () => {
         <div>
             <Card>
                 <Form form={form} onFinish={values => {
-                    axios.post('/api/login/', values).then(response => {
-                        localStorage.setItem('token', response.data);
-                        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data}`;
-                        navigate("/customers");
-                    }
-                    ).catch(err => console.log(err));
+                    axios.post('/api/login/', values)
+                        .then(response => {
+                            localStorage.setItem('token', response.data);
+                            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data}`;
+                            navigate("/customers");
+                        }).catch(err => {
+                            message.error(err.response.data);
+                            console.log(err);
+                        });
                 }} >
                     <Form.Item name="username" label="Username" rules={[{ required: true }]}>
                         <Input />
@@ -37,10 +40,14 @@ const Login = () => {
                     <Form.Item>
                         <Button style={{width: '100%'}} onClick={() => {
                             form.validateFields().then((values) => {
-                                axios.post('/api/register/', values).then(_r => {
-                                    form.resetFields();
-                                    message.success("Registration successful!");
-                                }).catch(err => console.log(err));
+                                axios.post('/api/register/', values)
+                                    .then(_r => {
+                                        form.resetFields();
+                                        message.success("Registration successful!");
+                                    }).catch(err => {
+                                        message.error(err.response.data);
+                                        console.log(err);
+                                    });
                             });
                         }}>
                             Register

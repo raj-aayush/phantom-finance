@@ -32,9 +32,9 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public void register(String username, String password) throws BadRequestException {
+    public void register(String username, String password) throws IllegalArgumentException {
         if(appUserRepository.findByUsername(username).isPresent()) {
-            throw new BadRequestException("Username already exists in the system");
+            throw new IllegalArgumentException("Username already exists in the system");
         }
         AppUser appUser = new AppUser();
         appUser.setUsername(username);
@@ -43,7 +43,7 @@ public class AuthService {
         appUserRepository.save(appUser);
     }
 
-    public String login(String username, String password) throws BadRequestException {
+    public String login(String username, String password) throws IllegalArgumentException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
@@ -62,9 +62,9 @@ public class AuthService {
         return token;
     }
 
-    public void logout(String token) throws BadRequestException {
+    public void logout(String token) throws IllegalArgumentException {
         if(token == null) {
-            throw new BadRequestException("No token provided");
+            throw new IllegalArgumentException("No token provided");
         }
         authTokenRepository.deleteByToken(token);
     }

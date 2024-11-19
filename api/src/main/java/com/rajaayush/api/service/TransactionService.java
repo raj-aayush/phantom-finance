@@ -21,7 +21,7 @@ public class TransactionService {
         Optional<Account> senderQuery = accountRepository.findById(UUID.fromString(senderId));
         Optional<Account> receiverQuery = accountRepository.findById(UUID.fromString(receiverId));
         if(senderQuery.isEmpty() || receiverQuery.isEmpty()) {
-            throw new IllegalArgumentException("Either a sender or a receiver ID must be provided");
+            throw new IllegalArgumentException("Valid sender and receiver IDs must be provided");
         }
         Account sender = senderQuery.get();
         Account receiver = receiverQuery.get();
