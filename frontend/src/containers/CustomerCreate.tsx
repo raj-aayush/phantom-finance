@@ -9,7 +9,7 @@ const CustomerCreate = () => {
     return (
         <SideMenuWrapper>
             <Layout.Content>
-                <Card>
+                <Card style={{width: "600px"}}>
                     <h2>New customer details</h2>
                     <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
                         axios.post('/api/customers/', values).then(_response => {
