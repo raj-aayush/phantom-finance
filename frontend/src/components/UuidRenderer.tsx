@@ -5,7 +5,7 @@ import CopyToClipboard from "./CopyToClipboard.tsx";
 const UuidRenderer = ({uuid, href}: {uuid: string, href: string}) => {
     return (
         <>
-            <Link to={href+uuid}>{uuid.substring(uuid.length-7)}</Link>
+            <Link to={href+uuid}><code>{uuid.substring(uuid.length-7)}</code></Link>
             &nbsp;&nbsp;
             <CopyToClipboard popoverText="Copy full SHA to clipboard" textToCopy={uuid} />
         </>
