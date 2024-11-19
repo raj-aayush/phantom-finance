@@ -13,8 +13,8 @@ const Login = () => {
         }
     })
     return (
-        <div>
-            <Card>
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: '100vh'}}>
+            <Card style={{width: "400px"}}>
                 <Form form={form} onFinish={values => {
                     axios.post('/api/login/', values)
                         .then(response => {

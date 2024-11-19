@@ -16,7 +16,7 @@ const TransactionCreate = () => {
     return (
         <SideMenuWrapper>
             <Layout.Content>
-                <Card>
+                <Card style={{width: "600px"}}>
                     <h2>New Transaction</h2>
                     <Form form={form} labelCol={{span: 6}} onFinish={(values) => {
                         axios.post('/api/transactions/', values).then(() => {
