@@ -4,6 +4,7 @@ import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Customer} from "../types";
 import UuidRenderer from "../components/UuidRenderer.tsx";
+import dayjs from "dayjs";
 
 const CustomerList = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -24,16 +25,19 @@ const CustomerList = () => {
             title: 'Name',
             dataIndex: 'firstName',
             key: 'name',
+            sorter: (a, b) => a.firstName.localeCompare(b.firstName)
         },
         {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+            sorter: (a, b) => a.email.localeCompare(b.email)
         },
         {
             title: 'Creation date',
             dataIndex: 'createdTs',
             key: 'createdTs',
+            sorter: (a, b) => dayjs(a.createdTs).valueOf() - dayjs(b.createdTs).valueOf(),
         }
     ];
     return (

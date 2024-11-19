@@ -5,6 +5,7 @@ import SideMenuWrapper from "./SideMenuWrapper.tsx";
 import {Transaction} from "../types";
 import {useParams} from "react-router-dom";
 import UuidRenderer from "../components/UuidRenderer.tsx";
+import dayjs from "dayjs";
 
 const AccountHistory = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -38,11 +39,13 @@ const AccountHistory = () => {
             title: 'Amount',
             dataIndex: 'amount',
             key: 'amount',
+            sorter: (a, b) => a.amount - b.amount,
         },
         {
             title: 'Transaction date',
             dataIndex: 'createdTs',
             key: 'createdTs',
+            sorter: (a, b) => dayjs(a.createdTs).valueOf() - dayjs(b.createdTs).valueOf(),
         }
     ];
     return (
