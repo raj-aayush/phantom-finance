@@ -1,4 +1,4 @@
-import {Button, Card, Form, Input, Layout, Select} from "antd";
+import {Button, Card, Form, Input, Layout} from "antd";
 import axios from "axios";
 import SideMenuWrapper from "./SideMenuWrapper.tsx";
 
